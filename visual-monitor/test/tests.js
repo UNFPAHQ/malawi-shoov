@@ -61,11 +61,43 @@ describe('Visual monitor testing', function() {
   it('should show the home page',function(done) {
     client
       .url(baseUrl)
+      .pause(2000)
       .webdrivercss(testName + '.homepage', {
         name: '1',
-        exclude: [],
-        remove: [],
-        hide: [],
+        exclude:
+          [
+            // Carousel.
+            '.carousel',
+            '.slider-for',
+            '.attachment',
+            // Video.
+            '.views-field-field-video',
+            '.videos-home-sub-list img',
+            // Publications.
+            '.pane-vw-publications img',
+            // Side banners.
+            '.side_banners a',
+            // News image.
+            '.news-img',
+            // Banner.
+            '.pane-custom img',
+            // Resources
+            '.pane-vw-resources img',
+          ],
+        remove:
+          [
+            // News.
+            '.news-body',
+            '.views-field-title',
+            // Resources
+            '.view-vw-resources .title',
+            '.view-vw-resources .summary',
+          ],
+        hide:
+          [
+            // Social updates.
+            '#twitter-widget-0'
+          ],
         screenWidth: selectedCaps == 'chrome' ? [640, 960, 1200] : undefined,
       }, resultsCallback)
       .call(done);
