@@ -61,11 +61,92 @@ describe('Visual monitor testing', function() {
   it('should show the home page',function(done) {
     client
       .url(baseUrl)
+      .pause(2000)
       .webdrivercss(testName + '.homepage', {
         name: '1',
-        exclude: [],
-        remove: [],
+        exclude:
+          [
+            // Carousel.
+            '.carousel',
+            '.slider-for',
+            '.attachment',
+            // Video.
+            '.views-field-field-video',
+            '.videos-home-sub-list img',
+            // Publications.
+            '.pane-vw-publications img',
+            // Side banners.
+            '.side_banners a',
+            // News image.
+            '.news-img',
+            // Banner.
+            '.pane-custom img',
+            // Resources
+            '.pane-vw-resources img',
+          ],
+        remove:
+          [
+            // News.
+            '.news-body',
+            '.views-field-title',
+            // Resources
+            '.view-vw-resources .title',
+            '.view-vw-resources .summary',
+          ],
+        hide:
+          [
+            // Social updates.
+            '#twitter-widget-0'
+          ],
+        screenWidth: selectedCaps == 'chrome' ? [640, 960, 1200] : undefined,
+      }, resultsCallback)
+      .call(done);
+  });
+
+  it('should show the topics page',function(done) {
+    client
+      .url(baseUrl + '/topics/sexual-reproductive-health-0')
+      .webdrivercss(testName + '.topics', {
+        name: '1',
+        exclude:
+          [
+            // Article.
+            '.topic-image img',
+            //  Related.
+            '.view-vw-related-topics-terms img',
+          ],
+        remove:
+          [
+            // Summary.
+            '.topic-summary',
+            // Related.
+            '.view-vw-related-topics-terms .description',
+          ],
         hide: [],
+        screenWidth: selectedCaps == 'chrome' ? [640, 960, 1200] : undefined,
+      }, resultsCallback)
+      .call(done);
+  });
+
+  it('should show the news page',function(done) {
+    client
+      .url(baseUrl + '/news')
+      .webdrivercss(testName + '.news', {
+        name: '1',
+        exclude:
+          [
+            // Article.
+            '.item a img',
+          ],
+        remove:
+          [
+            // Article.
+            '.right',
+          ],
+        hide:
+          [
+            '.left',
+          ],
         screenWidth: selectedCaps == 'chrome' ? [640, 960, 1200] : undefined,
       }, resultsCallback)
       .call(done);
