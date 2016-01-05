@@ -151,30 +151,4 @@ describe('Visual monitor testing', function() {
       }, resultsCallback)
       .call(done);
   });
-
-  //it('should show the videos page',function(done) {
-  //  client
-  //    .url(baseUrl + '/videos')
-  //    .webdrivercss(testName + '.videos', {
-  //      name: '1',
-  //      exclude:
-  //        [
-  //          // Main video.
-  //          '.player .video-wrap',
-  //          // Video thumbnail.
-  //          '.view-id-vw_video img'
-  //        ],
-  //      remove:
-  //        [
-  //          // Social.
-  //          '.stBubble',
-  //          // Video thumbnail.
-  //          '.view-id-vw_video h3',
-  //          '.view-id-vw_video .pub-date'
-  //        ],
-  //      hide: [],
-  //      screenWidth: selectedCaps == 'chrome' ? [640, 960, 1200] : undefined,
-  //    }, resultsCallback)
-  //    .call(done);
-  //});
 });
