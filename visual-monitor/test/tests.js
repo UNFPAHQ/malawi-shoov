@@ -102,4 +102,79 @@ describe('Visual monitor testing', function() {
       }, resultsCallback)
       .call(done);
   });
+
+  it('should show the topics page',function(done) {
+    client
+      .url(baseUrl + '/topics/sexual-reproductive-health-0')
+      .webdrivercss(testName + '.topics', {
+        name: '1',
+        exclude:
+          [
+            // Article.
+            '.topic-image img',
+            //  Related.
+            '.view-vw-related-topics-terms img',
+          ],
+        remove:
+          [
+            // Summary.
+            '.topic-summary',
+            // Related.
+            '.view-vw-related-topics-terms .description',
+          ],
+        hide: [],
+        screenWidth: selectedCaps == 'chrome' ? [640, 960, 1200] : undefined,
+      }, resultsCallback)
+      .call(done);
+  });
+
+  it('should show the news page',function(done) {
+    client
+      .url(baseUrl + '/news')
+      .webdrivercss(testName + '.news', {
+        name: '1',
+        exclude:
+          [
+            // Article.
+            '.item a img',
+          ],
+        remove:
+          [
+            // Article.
+            '.right',
+          ],
+        hide:
+          [
+            '.left',
+          ],
+        screenWidth: selectedCaps == 'chrome' ? [640, 960, 1200] : undefined,
+      }, resultsCallback)
+      .call(done);
+  });
+
+  //it('should show the videos page',function(done) {
+  //  client
+  //    .url(baseUrl + '/videos')
+  //    .webdrivercss(testName + '.videos', {
+  //      name: '1',
+  //      exclude:
+  //        [
+  //          // Main video.
+  //          '.player .video-wrap',
+  //          // Video thumbnail.
+  //          '.view-id-vw_video img'
+  //        ],
+  //      remove:
+  //        [
+  //          // Social.
+  //          '.stBubble',
+  //          // Video thumbnail.
+  //          '.view-id-vw_video h3',
+  //          '.view-id-vw_video .pub-date'
+  //        ],
+  //      hide: [],
+  //      screenWidth: selectedCaps == 'chrome' ? [640, 960, 1200] : undefined,
+  //    }, resultsCallback)
+  //    .call(done);
+  //});
 });
