@@ -73,7 +73,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext {
         break;
 
       case 'sidebar':
-        $link = $page->find('xpath', '//ul[@class="menu"]//li[contains(@class, "level-2")]/a[contains(., "' . $link_text .'")]');
+        $link = $page->find('xpath', '//div[@id="sub-page-template"]//ul[@class="menu"]//li[contains(@class, "level-2")]/a[contains(., "' . $link_text .'")]');
         break;
 
       case 'stay connected':

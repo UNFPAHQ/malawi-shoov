@@ -6,7 +6,7 @@ Feature:
   @api
   Scenario Outline: Visit every sidebar link.
     Given I am an anonymous user
-    When  I visit the "about-us" page
+    When  I visit the "about-us-UNFPA-Malawi" page
     Then  I should see the "<section>" with the "<link>" and have access to the link destination
 
     Examples:
