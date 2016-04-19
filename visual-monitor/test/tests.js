@@ -83,6 +83,8 @@ describe('Visual monitor testing', function() {
             '.pane-custom img',
             // Resources
             '.pane-vw-resources img',
+            // Resources
+            '#block-views-172428313b5961c4b19d143964b60636 img',
           ],
         remove:
           [
@@ -92,11 +94,17 @@ describe('Visual monitor testing', function() {
             // Resources
             '.view-vw-resources .title',
             '.view-vw-resources .summary',
+            // Events.
+            '#block-custom-custom-home-event-block .content',
+            // Vacancies
+            '#block-views-7a6059f127dd3b74a2fad54b36a9e200 .content'
           ],
         hide:
           [
             // Social updates.
-            '#twitter-widget-0'
+            '#twitter-widget-0',
+            // Resources
+            '.block-views-172428313b5961c4b19d143964b60636 summary'
           ],
         screenWidth: selectedCaps == 'chrome' ? [640, 960, 1200] : undefined,
       }, resultsCallback)
@@ -147,6 +155,16 @@ describe('Visual monitor testing', function() {
           [
             '.left',
           ],
+        screenWidth: selectedCaps == 'chrome' ? [640, 960, 1200] : undefined,
+      }, resultsCallback)
+      .call(done);
+  });
+
+  it('should show the about-us page',function(done) {
+    client
+      .url(baseUrl + '/http://malawi.unfpa.org/about-us-UNFPA-Malawi')
+      .webdrivercss(testName + '.about-us', {
+        name: '1',
         screenWidth: selectedCaps == 'chrome' ? [640, 960, 1200] : undefined,
       }, resultsCallback)
       .call(done);
