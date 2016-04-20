@@ -10,7 +10,7 @@ Feature:
     And   I click on Core tab
     Then  I should see "Malawi 2014 programme expenses (core)"
 
-  @api @wip
+  @api
   Scenario Outline: Visit Transparency Portal page, and check region selector
     Given I am an anonymous user
     When  I visit the "http://www.unfpa.org/transparency-portal/unfpa-malawi"
