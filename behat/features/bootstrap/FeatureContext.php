@@ -126,13 +126,13 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext {
   /**
    * @When I click on :arg1 tab
    */
-  public function iClickOnButtonTab($button) {
+  public function iClickOnButtonTab($tab) {
     $page_url = $this->getSession()->getCurrentUrl();
     $page = $this->getSession()->getPage();
 
     // Click the Donut tab.
-    if (!$chart_tabs = $page->find('css', 'li[tabfor="' . $button . '"]')) {
-      throw new \Exception("Could not find the " . $button . " button in `donut_chart_tab` button at ". $page_url);
+    if (!$chart_tabs = $page->find('xpath', '//*[@id="donut_chart_tabs"]/ul/li[2]/span')) {
+      throw new \Exception("Could not find the " . $tab . " button in `donut_chart_tab` button at ". $page_url);
     }
     $chart_tabs->click();
   }
@@ -317,45 +317,43 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext {
   }
 
   /**
-   * @When I :arg1 on :arg2 from :arg3 chart
+   * Validate if we have access to the file.
+   *
+   * @param $download_link
+   *  The download link to the file
+   * @throws Exception
    */
-  public function iDoAnActionOnColumnFromChartName($action, $chartColumn, $chartName) {
+  protected function validateDownloadLink($download_link) {
+    $file_path = $download_link->getAttribute('href');
+    $client = new Client(array('base_uri' => $this->getSession()->getCurrentUrl()));
+    try {
+      $client->get($file_path);
+    }
+    catch (GuzzleHttp\Exception\ClientException $e) {
+      $status_code = $e->getResponse()->getStatusCode();
+      if ($status_code != 200) {
+        throw new \Exception("Expected status code of '200' but returned status code of: " . $status_code . " for file: " . $file_path);
+      }
+    }
+  }
+
+  /**
+   * @Then I should see the portal title :arg1
+   */
+  public function iShouldSeeThePortalTitle($title_text) {
     $page = $this->getSession()->getPage();
-    sleep(10);
-    // Check the svg region to hover/click on.
-    switch($chartColumn) {
-      case "non-core resources":
-        $item = $page->find('xpath', '//div[@id="chart_div"]//*[local-name() = "svg"]//*[local-name()="rect" and @fill="#e0decd" and @width="47"]');
-        break;
 
-      case "UNFPA":
-        $item = $page->find('xpath', '//div[@id="implemented-all"]//*[local-name() = "svg"]//*[local-name()="rect" and @fill="#f7931d" and @width="48"]');
-        break;
-
-      case "Latin America":
-        $item = $page->find('xpath', '//div[@id="map_inner"]//*[@class="sm_state_BR"]');
-        break;
-
-      case "Asia":
-        $item = $page->find('xpath', '//div[@id="map_inner"]//*[@class="sm_state_PK"]');
-        break;
+    $this->iWaitForCssElement('#active-activities', "appear");
+    if (!strpos($page->getText(), $title_text)) {
+      throw new \Exception("Could not find the " . $title_text . " at " . $this->getSession()->getCurrentUrl());
     }
+  }
 
-    // Check if the svg item was found on the page.
-    if (!$item) {
-      throw new \Exception("The " .$chartColumn . " was not found in " . $chartName);
-    }
-
-    // Check if it needs to click on or hover on the svg item.
-    switch($action) {
-      case "hover":
-        $item->mouseOver();
-        break;
-
-      case "click":
-        $item->click();
-        break;
-    }
+  /**
+   * @When I visit the :arg1
+   */
+  public function iVisitThe($url) {
+    $this->getSession()->visit($url);
   }
 
 }
